@@ -14,6 +14,9 @@ import funkin.editors.ui.UISliceSprite;
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UISubstateWindow;
 
+import funkin.menus.ModSwitchMenu;
+import funkin.editors.EditorPicker;
+
 import flixel.group.FlxTypedSpriteGroup;
 
 import funkin.backend.system.framerate.Framerate;
@@ -81,6 +84,18 @@ function create() {
 }
 
 function update(elapsed) {
+
+	if (FlxG.keys.justPressed.SEVEN) {
+		persistentUpdate = false;
+		persistentDraw = true;
+		openSubState(new EditorPicker());
+	}
+
+	if (controls.SWITCHMOD) {
+		persistentUpdate = false;
+		persistentDraw = true;
+		openSubState(new ModSwitchMenu());
+	}
 
 	updateRoomList(elapsed);
 	

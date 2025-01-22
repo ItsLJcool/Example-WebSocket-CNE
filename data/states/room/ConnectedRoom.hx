@@ -71,10 +71,12 @@ function create() {
 	debugText.alignment = "center";
 	add(debugText);
 	var _room = getCurrentRoom();
+	trace(_room);
 	updateDebugText(_room);
 
 	if (isHost()) {
 		var pingTime = _room?.pingHostTime ?? (_room?.pingTimeout*0.25 ?? 5);
+		if (pingTime < 5) pingTime = 5;
 		pingRoomTimer.start(pingTime , () -> {
 			var _room = getCurrentRoom();
 			var pingPacket = new WebSocketPacket("room.ping", {room: _room.name});
@@ -86,7 +88,7 @@ function create() {
 
 function updateDebugText(roomData) {	
 	trace("update debug text");
-	var debugLol = "Name of Room: "+roomData.name+"\nUsers in Room: " +roomData.users.length+"\nHost UUID: "+roomData.host;
+	var debugLol = "Name of Room: "+roomData.name+"\nUsers in Room: " +roomData.users.length+"\nHost Username: "+roomData.host.username;
 	debugText.text = debugLol;
 	debugText.screenCenter();
 }
